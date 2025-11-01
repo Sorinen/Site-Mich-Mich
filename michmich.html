@@ -10,37 +10,24 @@
 
 <body>
     <div class="background"></div>
-    <!-- 🧭 HEADER / NAV -->
-    <header>
-            <a href="michmich.html" class="logo">
-                <span class="logo">Chez Mich-Mich</span>
-        <nav class="floating-menu">
-            <a href="index.php#home" class="menu-item">
-                <span class="icon">🏠</span>
-                <span class="label">Accueil</span>
-            </a>
-            <a href="page2.php#menu" class="menu-item">
-                <span class="icon">🍔</span>
-                <span class="label">Menu</span>
-            </a>
-            <a href="contact.php" class="menu-item">
-                <span class="icon">📞</span>
-                <span class="label">Contact</span>
-            </a>
-            <a href="index.php#cart" class="menu-item">
-                <span class="icon">🛒</span>
-                <span class="label">Panier</span>
-            </a>
-        </nav>
-    </header>
-    <!-- HERO -->
+<header>
+<a href="michmich.html" class="logo">
+    <span class="logo">Chez Mich-Mich</span>
+</a>
+<button id="burger" class="burger">☰</button>
+<div id="sidebar" class="sidebar">
+    <a href="michmich.html">🏠 Accueil</a>
+    <a href="menu.html">🍔 Menu</a>
+    <a href="contact.html">📞 Contact</a>
+</div>
+</header>
     <section id="home" class="hero">
-        <h1>Les samoussas Mich-Mchi <br> croustillants et faits maison</h1>
+        <h1>Les samoussas Mich-Mchi<br/> croustillants et faits maison</h1>
         <p>
-            Commandez vos samoussas préférés en ligne — livraison rapide et goût
+            Commandez vos samoussas préférés en ligne<br/>livraison rapide et goût
             garanti !
         </p>
-        <button class="cta">Commander maintenant</button>
+        <a href="contact.html" class="cta">Commander maintenant</a>
     </section>
 
         <main>
@@ -48,19 +35,13 @@
     <div class="carte-blanche">
     <h2>Chez Mich-Mich</h2>
     <p>
-        Bienvenue sur notre site ! Nous vous proposons des samoussas croustillants, 
-        faits maison avec des ingrédients frais et locaux. 
-        Dégustez nos saveurs uniques et laissez-vous tenter !
+Savourez l’authenticité de La Réunion !
+Chez Mich-Mich, nous préparons des samoussas faits maison, croustillants et généreux, selon notre tradition réunionnaise. Chaque bouchée est un voyage de saveurs, pensé pour ravir vos papilles et célébrer la qualité artisanale.
     </p>
     </div>
 </section>
 </main>
-<div class="photo">
-    <img src="samoussa.jpg" alt="samoussa">
-</div>
-
-    <!-- MENU -->
-    <section id="menu" class="menu">
+<section id="menu" class="menu">
         <h2>Notre Sélection</h2>
         <div class="carousel-container">
             <button class="carousel-arrow left">&#10094;</button>
@@ -149,8 +130,7 @@
         </div>
     </section>
 
-    <!-- 📞 CONTACT -->
-    <section id="contact" class="contact">
+<section id="contact" class="contact">
         <h2>Nous Contacter</h2>
         <p>
             📍 123 Rue ton ki , Saint André<br />
@@ -170,11 +150,9 @@
         </div>
     </section>
 
-<!-- footer.php -->
-    <!-- ⚙️ FOOTER -->
-    <footer>
+<footer>
         <p>© 2025 Chez Mich-Mich — Tous droits réservés</p>
     </footer>
-    <script src="michmic.js"></script>
+    <script src="michmich.js"></script>
 </body>
 </html>
