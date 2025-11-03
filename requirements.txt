@@ -1,2 +1,2 @@
 Flask==2.3.3
-stripe==7.26.0
+stripe==5.0.0
