@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message envoyé - Chez Mich-Mich</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <style>
+        .confirmation-box {
+            text-align: center;
+            padding: 60px 40px;
+            background-color: #497D74;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 100px auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .confirmation-box h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .confirmation-box p {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .confirmation-box .icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        .confirmation-box a {
+            display: inline-block;
+            background-color: #72bdb4;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .confirmation-box a:hover {
+            background-color: #27445D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    
+    <header>
+        <a href="{{ url_for('accueil') }}" class="logo">
+            <span class="logo">Chez Mich-Mich</span>
+        </a>
+        <button id="burger" class="burger">☰</button>
+        <div id="sidebar" class="sidebar">
+            <a href="{{ url_for('accueil') }}">🏠 Accueil</a>
+            <a href="{{ url_for('menu') }}">📋 Menu</a>
+            <a href="{{ url_for('contact') }}">📞 Contact</a>
+        </div>
+    </header>
+
+    <div class="confirmation-box">
+        <div class="icon">✅</div>
+        <h1>Merci {{ prenom }} !</h1>
+        <p>Votre message a bien été envoyé.</p>
+        <p>Nous vous répondrons dans les plus brefs délais.</p>
+        <a href="{{ url_for('accueil') }}">Retour à l'accueil</a>
+    </div>
+
+    <footer>
+        <p>© 2025 Chez Mich-Mich – Tous droits réservés</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='michmich.js') }}"></script>
+</body>
+</html>

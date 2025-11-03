@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Chez Mich-Mich</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+</head>
+
+<body>
+    <div class="background"></div>
+    
+    <header>
+        <a href="{{ url_for('accueil') }}" class="logo">
+            <span class="logo">Chez Mich-Mich</span>
+        </a>
+        <button id="burger" class="burger">☰</button>
+        <div id="sidebar" class="sidebar">
+            <a href="{{ url_for('accueil') }}">🏠 Accueil</a>
+            <a href="{{ url_for('menu') }}">📋 Menu</a>
+            <a href="{{ url_for('contact') }}">📞 Contact</a>
+        </div>
+    </header>
+
+    <section id="menu" class="table-container">
+        <table>
+            <caption>NOS TARIFS</caption>
+            <thead>
+                <tr>
+                    <th>Désignation</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Samoussa Poulet</td>
+                    <td>À l'unité</td>
+                    <td>1,50 €</td>
+                </tr>
+                <tr>
+                    <td>Samoussa Fromage</td>
+                    <td>À l'unité</td>
+                    <td>1,30 €</td>
+                </tr>
+                <tr>
+                    <td>Samoussa Végétarien</td>
+                    <td>À l'unité</td>
+                    <td>1,40 €</td>
+                </tr>
+                <tr>
+                    <td>Samoussa Bœuf</td>
+                    <td>À l'unité</td>
+                    <td>1,60 €</td>
+                </tr>
+                <tr>
+                    <td>Samoussa Thon</td>
+                    <td>À l'unité</td>
+                    <td>1,50 €</td>
+                </tr>
+                <tr>
+                    <td>Menu 6 Samoussas</td>
+                    <td>6 pièces au choix</td>
+                    <td>8,00 €</td>
+                </tr>
+                <tr>
+                    <td>Menu 12 Samoussas</td>
+                    <td>12 pièces au choix</td>
+                    <td>15,00 €</td>
+                </tr>
+                <tr>
+                    <td>Menu Famille</td>
+                    <td>20 pièces variées</td>
+                    <td>24,00 €</td>
+                </tr>
+                <tr>
+                    <td>Pack Dégustation</td>
+                    <td>4 variétés</td>
+                    <td>5,50 €</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="font-style: italic; padding: 15px;">
+                        * Sauces offertes avec les menus<br>
+                        * Livraison gratuite à partir de 20€
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Nous Contacter</h2>
+        <p>
+            📍 123 Rue ton ki, Saint André<br>
+            📞 06 92 12 34 56<br>
+            ✉️ contact@samoussamichmich.fr
+        </p>
+        <div class="social-icons">
+            <a href="https://facebook.com" class="social-icon" target="_blank" rel="noopener">
+                <img src="{{ url_for('static', filename='images/fb.png') }}" alt="Facebook">
+            </a>
+            <a href="https://twitter.com" class="social-icon" target="_blank" rel="noopener">
+                <img src="{{ url_for('static', filename='images/tik.png') }}" alt="Twitter">
+            </a>
+            <a href="https://instagram.com" class="social-icon" target="_blank" rel="noopener">
+                <img src="{{ url_for('static', filename='images/insta.png') }}" alt="Instagram">
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Chez Mich-Mich – Tous droits réservés</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='michmich.js') }}"></script>
+</body>
+</html>
