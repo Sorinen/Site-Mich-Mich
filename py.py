@@ -46,5 +46,5 @@ def page_not_found(e):
 
 # Lancement de l'application
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Render fournit le port automatiquement
+    port = int(os.environ.get("PORT", 5001))  # Render fournit le port automatiquement
     app.run(debug=True, host='0.0.0.0', port=port)
