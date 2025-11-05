@@ -54,23 +54,7 @@
                 Total : {{ total|round(2) }}€
             </div>
         </div>
-        {% for item in panier %}
-        <div class="panier-item">
-        <div>
-        <strong>{{ item.nom }}</strong>
-        <small style="color: #72bdb4;"> ({{ item.type }})</small>
-        </div>
-        <div>
-        <span>x{{ item.quantite }}</span>
-        <span style="margin-left: 15px; font-weight: bold;">{{ (item.prix * item.quantite)|round(2) }}€</span>
-        <!-- Bouton supprimer -->
-        <form action="{{ url_for('supprimer_article') }}" method="post" style="display:inline;">
-            <input type="hidden" name="item_id" value="{{ item.id }}">
-            <button type="submit" class="btn-supprimer" style="margin-left:10px;">🗑️</button>
-        </form>
-    </div>
-</div>
-{% endfor %}
+
         <!-- Formulaire de commande -->
         <form action="{{ url_for('submit_commande') }}" method="post" id="commande-form">
             
