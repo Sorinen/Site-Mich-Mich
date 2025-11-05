@@ -1,3 +1,65 @@
+# ==================== Python ====================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# ==================== Environnement ====================
+# Variables d'environnement (IMPORTANT)
+.env
+.env.local
+.env.*.local
+
+# ==================== IDE ====================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ==================== OS ====================
+# macOS
 .DS_Store
-static/.DS_Store
-templates/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ==================== Logs ====================
+*.log
+logs/
+
+# ==================== Base de données ====================
+*.db
+*.sqlite
+*.sqlite3
+
+# ==================== Uploads ====================
+uploads/
+temp/
+
+# ==================== Distribution ====================
+dist/
+build/
+*.egg-info/

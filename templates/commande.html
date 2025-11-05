@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commander - Chez Mich-Mich</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+</head>
+
+<body>
+    <div class="background"></div>
+    
+    <header>
+        <a href="{{ url_for('accueil') }}" class="logo">
+            <span class="logo">Chez Mich-Mich</span>
+        </a>
+        <button id="burger" class="burger">☰</button>
+        <div id="sidebar" class="sidebar">
+            <a href="{{ url_for('accueil') }}">🏠 Accueil</a>
+            <a href="{{ url_for('menu') }}">📋 Menu</a>
+            <a href="{{ url_for('contact') }}">📞 Contact</a>
+            <a href="{{ url_for('commande') }}">🛒 panier</a>
+        </div>
+    </header>
+
+    <div class="commande-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if panier %}
+        <!-- Récapitulatif du panier -->
+        <div class="panier-recap">
+            <h3>📦 Récapitulatif de votre commande</h3>
+            <div class="panier-items">
+                {% for item in panier %}
+                <div class="panier-item">
+                    <div>
+                        <strong>{{ item.nom }}</strong>
+                        <small style="color: #72bdb4;"> ({{ item.type }})</small>
+                    </div>
+                    <div>
+                        <span>x{{ item.quantite }}</span>
+                        <span style="margin-left: 15px; font-weight: bold;">{{ (item.prix * item.quantite)|round(2) }}€</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="panier-total">
+                Total : {{ total|round(2) }}€
+            </div>
+        </div>
+        {% for item in panier %}
+        <div class="panier-item">
+        <div>
+        <strong>{{ item.nom }}</strong>
+        <small style="color: #72bdb4;"> ({{ item.type }})</small>
+        </div>
+        <div>
+        <span>x{{ item.quantite }}</span>
+        <span style="margin-left: 15px; font-weight: bold;">{{ (item.prix * item.quantite)|round(2) }}€</span>
+        <!-- Bouton supprimer -->
+        <form action="{{ url_for('supprimer_article') }}" method="post" style="display:inline;">
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+            <button type="submit" class="btn-supprimer" style="margin-left:10px;">🗑️</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+        <!-- Formulaire de commande -->
+        <form action="{{ url_for('submit_commande') }}" method="post" id="commande-form">
+            
+            <!-- Informations client -->
+            <div class="form-section">
+                <h3>👤 Vos informations</h3>
+                
+                <div class="form-group">
+                    <label for="nom">Nom complet *</label>
+                    <input type="text" name="nom" id="nom" required placeholder="Jean Dupont">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" name="email" id="email" required placeholder="jean@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone *</label>
+                    <input type="tel" name="telephone" id="telephone" required placeholder="0692123456">
+                </div>
+            </div>
+
+            <!-- Lieu de retrait -->
+            <div class="form-section">
+                <h3>📍 Lieu de retrait</h3>
+                
+                <div class="form-group">
+                    <label for="ville">Ville de retrait *</label>
+                    <select name="ville" id="ville" required>
+                        <option value="">-- Choisir une ville --</option>
+                        {% for ville in villes %}
+                        <option value="{{ ville }}">{{ ville }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Date et créneau -->
+            <div class="form-section">
+                <h3>📅 Date et heure de retrait</h3>
+                
+                <div class="form-group">
+                    <label for="date_retrait">Date de retrait *</label>
+                    <input type="date" name="date_retrait" id="date_retrait" required min="{{ date_min }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="creneau">Créneau horaire *</label>
+                    <select name="creneau" id="creneau" required>
+                        <option value="">-- Choisir un créneau --</option>
+                        {% for creneau in creneaux %}
+                        <option value="{{ creneau }}">{{ creneau }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mode de paiement -->
+            <div class="form-section">
+                <h3>💳 Mode de paiement</h3>
+                
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="mode_paiement" value="En ligne" required>
+                        💳 Payer en ligne (CB)
+                    </label>
+                    <label>
+                        <input type="radio" name="mode_paiement" value="A la livraison" required>
+                        💵 Payer à la livraison (espèces)
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                ✅ Valider ma commande
+            </button>
+        </form>
+
+        {% else %}
+        <!-- Panier vide -->
+        <div class="panier-vide-msg">
+            <h2 style="color: #72bdb4;">🛒 Votre panier est vide</h2>
+            <p>Ajoutez des produits à votre panier pour passer commande.</p>
+            <a href="{{ url_for('menu') }}">Voir le menu</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>© 2025 Chez Mich-Mich – Tous droits réservés</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='michmich.js') }}"></script>
+</body>
+</html>

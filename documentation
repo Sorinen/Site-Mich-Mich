@@ -1,0 +1,235 @@
+# Guide des Modifications - Site Mich-Mich
+
+## 🎯 Nouvelles fonctionnalités ajoutées
+
+### 1. **Système de panier persistant**
+- Widget de panier visible sur toutes les pages (sauf page de commande)
+- Panier stocké en session côté serveur
+- Possibilité d'ajouter/retirer des articles
+- Affichage du total en temps réel
+
+### 2. **Choix du type de samoussa**
+- Modal qui s'ouvre lors de l'ajout au panier
+- Choix entre **Frais** ❄️ ou **Surgelé** 🧊
+- Information visible dans le panier
+
+### 3. **Formulaire de commande complet**
+- **Informations client** : nom, email, téléphone
+- **Lieu de retrait** : choix entre 5 villes (Saint-André, Saint-Denis, etc.)
+- **Date de retrait** : avec date minimale au lendemain
+- **Créneaux horaires** : 7 créneaux disponibles de 9h à 18h
+- **Mode de paiement** : CB en ligne ou à la livraison
+
+### 4. **Emails automatiques**
+- Email de confirmation au client
+- Email de notification au commerçant
+- Détails complets de la commande
+
+## 📁 Fichiers modifiés/créés
+
+### Fichiers Python
+- **py.py** : Backend Flask avec gestion du panier et des commandes
+  - Routes API pour le panier (`/api/panier/*`)
+  - Route de commande (`/submit_commande`)
+  - Configuration des emails
+  - Gestion des sessions
+
+### Templates HTML
+- **michmich.html** : Page d'accueil avec widget panier
+- **menu.html** : Page menu avec boutons d'ajout et panier
+- **commande.html** : ⭐ NOUVEAU - Formulaire de commande complet
+- **confirmation_commande.html** : ⭐ NOUVEAU - Page de confirmation
+- **contact.html** : Inchangé (formulaire de contact simple)
+
+### JavaScript
+- **michmich.js** : Logique complète du panier
+  - Gestion des appels API
+  - Modal de choix (frais/surgelé)
+  - Affichage dynamique du panier
+  - Notifications
+
+## 🚀 Installation et configuration
+
+### 1. Variables d'environnement à configurer
+
+```bash
+# Clé secrète Flask (générer une clé aléatoire)
+export SECRET_KEY="votre_cle_secrete_aleatoire"
+
+# Configuration Email (Gmail)
+export MAIL_USERNAME="votre.email@gmail.com"
+export MAIL_PASSWORD="votre_mot_de_passe_application"
+
+# (Optionnel) Pour le paiement Stripe
+export STRIPE_PUBLIC_KEY="pk_..."
+export STRIPE_SECRET_KEY="sk_..."
+```
+
+### 2. Configuration Gmail
+
+Pour envoyer des emails via Gmail :
+
+1. Allez sur https://myaccount.google.com/security
+2. Activez la validation en 2 étapes
+3. Générez un "Mot de passe d'application"
+4. Utilisez ce mot de passe dans `MAIL_PASSWORD`
+
+### 3. Dépendances Python
+
+```bash
+pip install -r requirements.txt
+```
+
+Les dépendances incluent :
+- Flask 2.3.3
+- Flask-Mail 0.9.1
+- stripe 5.0.0 (pour futur paiement en ligne)
+
+### 4. Structure des dossiers
+
+```
+votre-projet/
+│
+├── py.py                    # Application Flask
+├── requirements.txt
+│
+├── templates/
+│   ├── michmich.html        # Accueil
+│   ├── menu.html            # Menu/Tarifs
+│   ├── contact.html         # Contact
+│   ├── commande.html        # ⭐ NOUVEAU
+│   ├── confirmation.html    # Confirmation contact
+│   └── confirmation_commande.html  # ⭐ NOUVEAU
+│
+└── static/
+    ├── michmich.css
+    ├── michmich.js
+    └── images/
+        ├── samousa.jpg
+        ├── photo.jpg
+        ├── fb.png
+        ├── tik.png
+        └── insta.png
+```
+
+## 🎨 Personnalisation
+
+### Modifier les villes de retrait
+
+Dans `py.py`, ligne ~30 :
+
+```python
+VILLES_RETRAIT = [
+    "Saint-André",
+    "Saint-Denis",
+    "Votre-Ville",
+    # Ajoutez vos villes ici
+]
+```
+
+### Modifier les créneaux horaires
+
+Dans `py.py`, ligne ~38 :
+
+```python
+CRENEAUX_HORAIRES = [
+    "9h00 - 10h00",
+    "14h00 - 15h00",
+    # Ajoutez vos créneaux ici
+]
+```
+
+### Ajouter/Modifier des produits
+
+Dans `michmich.html` et `menu.html`, ajoutez des cartes de produits :
+
+```html
+<div class="carte">
+    <img src="{{ url_for('static', filename='images/votre-image.jpg') }}" alt="Nom">
+    <h3>Nom du produit</h3>
+    <p>Description</p>
+    <span>Prix €</span><br>
+    <button>Ajouter au panier</button>
+</div>
+```
+
+## 🔧 Fonctionnement technique
+
+### Flux de commande
+
+1. **Utilisateur parcourt le site** → Ajoute des produits au panier
+2. **Modal s'ouvre** → Choix frais ou surgelé
+3. **Panier mis à jour** → Via API `/api/panier/ajouter`
+4. **Clic "Commander"** → Redirection vers `/commande`
+5. **Formulaire rempli** → Validation côté client
+6. **Soumission** → POST vers `/submit_commande`
+7. **Emails envoyés** → Client + commerçant
+8. **Confirmation affichée** → Panier vidé
+
+### API Endpoints
+
+| Endpoint | Méthode | Description |
+|----------|---------|-------------|
+| `/api/panier/obtenir` | GET | Récupère le panier |
+| `/api/panier/ajouter` | POST | Ajoute un article |
+| `/api/panier/retirer` | POST | Retire un article |
+| `/api/panier/vider` | POST | Vide le panier |
+
+### Session Flask
+
+Le panier est stocké dans `session['panier']` avec la structure :
+
+```python
+[
+    {
+        'nom': 'Samoussa Poulet',
+        'prix': 1.50,
+        'quantite': 2,
+        'type': 'frais'
+    },
+    # ...
+]
+```
+
+## 🎯 Prochaines étapes possibles
+
+### Paiement en ligne avec Stripe
+
+1. Créer un compte Stripe
+2. Obtenir les clés API
+3. Implémenter la route `/create-checkout-session`
+4. Ajouter le JavaScript Stripe dans `commande.html`
+
+### Gestion avancée
+
+- Tableau de bord admin pour voir les commandes
+- Système de statuts (en préparation, prête, livrée)
+- Historique des commandes pour les clients
+- Système de points de fidélité
+
+### Améliorations UX
+
+- Animations plus fluides
+- Mode sombre/clair
+- Sauvegarde du panier dans localStorage
+- PWA (Progressive Web App)
+
+## 📧 Support
+
+Pour toute question sur les modifications :
+- Vérifiez que toutes les variables d'environnement sont configurées
+- Consultez les logs Flask pour les erreurs
+- Testez d'abord en environnement de développement
+
+## ✅ Checklist de déploiement
+
+- [ ] Variables d'environnement configurées
+- [ ] Email de test envoyé avec succès
+- [ ] Toutes les pages testées
+- [ ] Panier fonctionne sur mobile
+- [ ] Formulaire de commande validé
+- [ ] Images présentes dans `/static/images/`
+- [ ] SECRET_KEY changée en production
+- [ ] Mode debug désactivé (`debug=False`)
+
+Bon courage avec votre site ! 🎉

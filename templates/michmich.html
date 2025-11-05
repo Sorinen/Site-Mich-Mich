@@ -19,8 +19,12 @@
             <a href="{{ url_for('accueil') }}">🏠 Accueil</a>
             <a href="{{ url_for('menu') }}">📋 Menu</a>
             <a href="{{ url_for('contact') }}">📞 Contact</a>
+            <a href="{{ url_for('commande') }}">🛒 panier</a>
         </div>
     </header>
+
+    <!-- Widget Panier -->
+    <div id="panier-widget"></div>
 
     <section id="home" class="hero">
         <h1>Les samoussas Mich-Mich<br>croustillants et faits maison</h1>
@@ -28,7 +32,7 @@
             Commandez vos samoussas préférés en ligne<br/>
             livraison rapide et goût garanti !
         </p>
-        <a href="{{ url_for('contact') }}" class="cta">Commander maintenant</a>
+        <a href="{{ url_for('menu') }}" class="cta">Commander maintenant</a>
     </section>
 
     <main>
