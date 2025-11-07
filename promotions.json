@@ -1,0 +1,12 @@
+[
+  {
+    "nom": "thon ",
+    "prix": 4.0,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "samoussa bachique",
+    "prix": 3.0,
+    "image": "samousa.jpg"
+  }
+]

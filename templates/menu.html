@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Chez Mich-Mich</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
 </head>
 
 <body>
@@ -38,67 +39,21 @@
                 </tr>
             </thead>
             <tbody>
+                {% for produit in produits %}
                 <tr>
-                    <td>Samoussa Poulet</td>
+                    <td>{{ produit.nom }}</td>
                     <td>À l'unité</td>
-                    <td>1,50 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Samoussa Poulet', 1.50)">Ajouter</button></td>
+                    <td>{{ produit.prix }} €</td>
+                    <td><button class="btn-table" onclick="afficherModalChoix('{{ produit.nom.replace("'", "\\'") }}', {{ produit.prix }})">Ajouter</button></td>
                 </tr>
-                <tr>
-                    <td>Samoussa Fromage</td>
-                    <td>À l'unité</td>
-                    <td>1,30 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Samoussa Fromage', 1.30)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Samoussa Végétarien</td>
-                    <td>À l'unité</td>
-                    <td>1,40 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Samoussa Végétarien', 1.40)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Samoussa Bœuf</td>
-                    <td>À l'unité</td>
-                    <td>1,60 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Samoussa Bœuf', 1.60)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Samoussa Thon</td>
-                    <td>À l'unité</td>
-                    <td>1,50 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Samoussa Thon', 1.50)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Menu 6 Samoussas</td>
-                    <td>6 pièces au choix</td>
-                    <td>8,00 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Menu 6 Samoussas', 8.00)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Menu 12 Samoussas</td>
-                    <td>12 pièces au choix</td>
-                    <td>15,00 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Menu 12 Samoussas', 15.00)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Menu Famille</td>
-                    <td>20 pièces variées</td>
-                    <td>24,00 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Menu Famille', 24.00)">Ajouter</button></td>
-                </tr>
-                <tr>
-                    <td>Pack Dégustation</td>
-                    <td>4 variétés</td>
-                    <td>5,50 €</td>
-                    <td><button class="btn-table" onclick="afficherModalChoix('Pack Dégustation', 5.50)">Ajouter</button></td>
-                </tr>
+                {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="4" style="font-style: italic; padding: 15px;">
                         * Sauces offertes avec les menus<br>
                         * Livraison gratuite à partir de 20€<br>
-                        * Choix disponibles : Frais ou Surgelé
+                        * Choix disponibles : Cuit ou Surgelé
                     </td>
                 </tr>
             </tfoot>

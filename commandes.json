@@ -1,0 +1,131 @@
+[
+  {
+    "id": 4,
+    "date_commande": "2025-11-07 15:51:16",
+    "nom": "boss",
+    "email": "boss@booss.com",
+    "telephone": "444",
+    "type_retrait": "sur_place",
+    "ville": "Saint-Denis",
+    "adresse": null,
+    "date_retrait": "2025-11-21",
+    "creneau": "10h00 - 11h00",
+    "mode_paiement": "A la livraison",
+    "statut_paiement": "En attente",
+    "panier": [
+      {
+        "nom": "Samoussa Végétarien",
+        "prix": 1.4,
+        "quantite": 3,
+        "type": "cuit"
+      }
+    ],
+    "total": 4.199999999999999,
+    "statut": "En cours"
+  },
+  {
+    "id": 2,
+    "date_commande": "2025-11-07 16:19:38",
+    "nom": "bb",
+    "email": "bbb@bbb.com",
+    "telephone": "123",
+    "type_retrait": "sur_place",
+    "ville": "Le Port",
+    "adresse": null,
+    "date_retrait": "2025-11-29",
+    "creneau": "16h00 - 17h00",
+    "mode_paiement": "En ligne",
+    "statut_paiement": "PayÃ©",
+    "panier": [
+      {
+        "nom": "thon ",
+        "prix": 4,
+        "quantite": 4,
+        "type": "cuit"
+      },
+      {
+        "nom": "Samoussa Fromage",
+        "prix": 1.3,
+        "quantite": 6,
+        "type": "cuit"
+      }
+    ],
+    "total": 23.8,
+    "statut": "En cours"
+  },
+  {
+    "id": 3,
+    "date_commande": "2025-11-07 16:53:09",
+    "nom": "boo",
+    "email": "boo@boo",
+    "telephone": "44'",
+    "type_retrait": "livraison",
+    "adresse_retrait": "FFFF",
+    "date_retrait": "2025-11-21",
+    "creneau": "11h00 - 12h00",
+    "mode_paiement": "A la livraison",
+    "statut_paiement": "En attente",
+    "panier": [
+      {
+        "nom": "Samoussa Végétarien",
+        "prix": 1.4,
+        "quantite": 8,
+        "type": "cuit"
+      },
+      {
+        "nom": "Samoussa Fromage",
+        "prix": 1.3,
+        "quantite": 3,
+        "type": "surgelé"
+      }
+    ],
+    "total": 15.1,
+    "statut": "En cours"
+  },
+  {
+    "id": 4,
+    "date_commande": "2025-11-07 16:58:12",
+    "nom": "vvv",
+    "email": "vvv@vv.com",
+    "telephone": "44'",
+    "type_retrait": "livraison",
+    "adresse_retrait": "dfdd",
+    "date_retrait": "2025-11-15",
+    "creneau": "15h00 - 16h00",
+    "mode_paiement": "A la livraison",
+    "statut_paiement": "En attente",
+    "panier": [
+      {
+        "nom": "Menu 6 Samoussas",
+        "prix": 8,
+        "quantite": 4,
+        "type": "cuit"
+      }
+    ],
+    "total": 32,
+    "statut": "En cours"
+  },
+  {
+    "id": 5,
+    "date_commande": "2025-11-07 17:03:06",
+    "nom": "CCCc",
+    "email": "CCC@CCC.com",
+    "telephone": "4444",
+    "type_retrait": "livraison",
+    "adresse_retrait": "DDDd",
+    "date_retrait": "2025-11-28",
+    "creneau": "11h00 - 12h00",
+    "mode_paiement": "A la livraison",
+    "statut_paiement": "En attente",
+    "panier": [
+      {
+        "nom": "Menu 6 Samoussas",
+        "prix": 8,
+        "quantite": 4,
+        "type": "cuit"
+      }
+    ],
+    "total": 32,
+    "statut": "En cours"
+  }
+]

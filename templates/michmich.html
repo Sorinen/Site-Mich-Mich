@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chez Mich-Mich - Samoussas Réunionnais</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
 </head>
 
 <body>
@@ -50,73 +51,19 @@
     </main>
 
     <section id="menu" class="menu">
-        <h2>Notre Sélection</h2>
+        <h2>LES PROMOTIONS</h2>
         <div class="carousel-container">
             <button class="carousel-arrow left" aria-label="Précédent">&#10094;</button>
             <div class="carousel">
+                {% for produit in produits %}
                 <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Samoussa Poulet">
-                    <h3>Samoussa Poulet</h3>
-                    <p>Croustillant et épicé – un classique !</p>
-                    <span>1,50 €</span><br>
+                    <img src="{{ url_for('static', filename='images/' + produit.image) }}" alt="{{ produit.nom }}">
+                    <h3>{{ produit.nom }}</h3>
+                    <p>Délicieux et croustillant</p>
+                    <span>{{ produit.prix }} €</span><br>
                     <button>Ajouter au panier</button>
                 </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Samoussa Fromage">
-                    <h3>Samoussa Fromage</h3>
-                    <p>Fondant à cœur, croustillant à l'extérieur.</p>
-                    <span>1,30 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Samoussa Végétarien">
-                    <h3>Samoussa Végétarien</h3>
-                    <p>Un mélange de légumes savoureux et épices douces.</p>
-                    <span>1,40 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Samoussa Bœuf">
-                    <h3>Samoussa Bœuf</h3>
-                    <p>Viande tendre et épices traditionnelles.</p>
-                    <span>1,60 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Menu 6 Samoussas">
-                    <h3>Menu 6 Samoussas</h3>
-                    <p>6 samoussas au choix + sauce offerte.</p>
-                    <span>8,00 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Menu 12 Samoussas">
-                    <h3>Menu 12 Samoussas</h3>
-                    <p>12 samoussas au choix + 2 sauces offertes.</p>
-                    <span>15,00 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Menu Famille">
-                    <h3>Menu Famille</h3>
-                    <p>20 samoussas variés + 3 sauces + boisson.</p>
-                    <span>24,00 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
-
-                <div class="carte">
-                    <img src="{{ url_for('static', filename='images/samousa.jpg') }}" alt="Pack Dégustation">
-                    <h3>Pack Dégustation</h3>
-                    <p>4 variétés différentes pour découvrir nos saveurs.</p>
-                    <span>5,50 €</span><br>
-                    <button>Ajouter au panier</button>
-                </div>
+                {% endfor %}
             </div>
             <button class="carousel-arrow right" aria-label="Suivant">&#10095;</button>
         </div>
@@ -144,6 +91,9 @@
 
     <footer>
         <p>© 2025 Chez Mich-Mich – Tous droits réservés</p>
+        <p style="opacity: 0.3; font-size: 0.7rem; margin-top: 5px;">
+            <a href="{{ url_for('admin_login') }}" style="color: inherit; text-decoration: none;">•</a>
+        </p>
     </footer>
 
     <script src="{{ url_for('static', filename='michmich.js') }}"></script>

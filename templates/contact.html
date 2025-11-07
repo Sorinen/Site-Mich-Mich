@@ -5,6 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Chez Mich-Mich</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <style>
+        /* Labels flottants */
+        .floating-label {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .floating-label input,
+        .floating-label textarea {
+            width: 100%;
+            padding: 18px 12px 8px 12px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.95);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .floating-label label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1rem;
+            transition: all 0.3s;
+            pointer-events: none;
+            background: transparent;
+            padding: 0 4px;
+        }
+
+        .floating-label textarea + label {
+            top: 20px;
+        }
+
+        .floating-label input:focus,
+        .floating-label textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label,
+        .floating-label textarea:focus + label,
+        .floating-label textarea:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            background: linear-gradient(135deg, #FFF9E6 0%, #D8DAB5 100%);
+        }
+    </style>
 </head>
 
 <body>
@@ -25,31 +78,24 @@
 
     <div class="centered-form-container">
         <form action="{{ url_for('submit') }}" method="post">
-            <h2 style="text-align: center; margin-bottom: 20px; color: white;">Contactez-nous</h2>
+            <h2 style="text-align: center; margin-bottom: 25px; color: #4A5D23;">Contactez-nous</h2>
             
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            
-            <p>
-                <label for="prenom">Votre prénom *</label><br>
-                <input type="text" name="prenom" id="prenom" required placeholder="Jean">
-            </p>
-            <p>
-                <label for="mail">Votre email *</label><br>
-                <input type="email" name="mail" id="mail" required placeholder="jean@example.com">
-            </p>
-            <p>
-                <label for="ameliorer">Votre message *</label><br>
-                <textarea name="message" id="ameliorer" rows="5" required placeholder="Votre message ici..."></textarea>
-            </p>
-            <p>
-                <button type="submit">Envoyer</button>
-            </p>
+            <div class="floating-label">
+                <input type="text" name="prenom" id="prenom" required placeholder=" ">
+                <label for="prenom">Votre prénom *</label>
+            </div>
+
+            <div class="floating-label">
+                <input type="email" name="mail" id="mail" required placeholder=" ">
+                <label for="mail">Votre email *</label>
+            </div>
+
+            <div class="floating-label">
+                <textarea name="message" id="message" rows="5" required placeholder=" "></textarea>
+                <label for="message">Votre message *</label>
+            </div>
+
+            <button type="submit">Envoyer</button>
         </form>
     </div>
 

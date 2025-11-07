@@ -232,4 +232,567 @@ Pour toute question sur les modifications :
 - [ ] SECRET_KEY changée en production
 - [ ] Mode debug désactivé (`debug=False`)
 
-Bon courage avec votre site ! 🎉
+
+# 🍱 Chez Mich-Mich - Site E-commerce de Samoussas
+
+## 📋 Nouvelles Fonctionnalités
+
+### ✨ Améliorations du Panier
+- **Boutons +/- pour ajuster les quantités** directement dans le panier et sur la page commande
+- Changement de "frais" en **"cuit"** pour les produits
+- Option **"surgelé"** disponible pour tous les produits
+
+### 🚚 Options de Livraison
+- **Retrait sur place** : Choix de la ville de retrait
+- **Livraison à domicile** : Champ adresse complète avec détails
+
+### 👨‍💼 Espace Administrateur Complet
+
+#### Accès Admin
+- URL : `http://localhost:5001/admin/login`
+- Identifiants par défaut : 
+  - Username: `admin`
+  - Password: `admin123`
+
+#### Dashboard Administrateur
+Le dashboard affiche :
+
+1. **📊 Statistiques Principales**
+   - Total des commandes
+   - Chiffre d'affaires (total en €)
+   - Paniers abandonnés
+   - Trafic du site (nombre de visites)
+
+2. **🏆 Meilleures Ventes**
+   - Top 5 des produits les plus vendus
+   - Quantités vendues pour chaque produit
+
+3. **📋 Gestion des Commandes**
+   - Liste complète de toutes les commandes
+   - Détails pour chaque commande :
+     - Informations client (nom, email, téléphone)
+     - Type de retrait (sur place ou livraison)
+     - Adresse de livraison OU ville de retrait
+     - Date et créneau horaire
+     - Mode de paiement (en ligne ou à la livraison)
+     - Statut du paiement (Payé / En attente)
+     - Liste des produits commandés avec quantités
+     - Total de la commande
+
+4. **🍱 Gestion des Produits**
+   - Ajouter de nouveaux produits au menu
+   - Modifier les produits existants (nom, prix, image)
+   - Supprimer des produits
+   - Produits apparaissent automatiquement sur la page d'accueil et le menu
+
+## 🚀 Installation
+
+### 1. Prérequis
+- Python 3.7+
+- pip
+
+### 2. Configuration
+
+Créez un fichier `.env` à la racine du projet :
+```bash
+cp .env.example .env
+```
+
+Éditez `.env` avec vos vraies valeurs :
+```bash
+# Générez une clé secrète aléatoire
+SECRET_KEY=votre_cle_secrete_tres_longue_et_aleatoire
+
+# Configurez votre Gmail
+MAIL_USERNAME=votre.email@gmail.com
+MAIL_PASSWORD=mot_de_passe_application_gmail
+
+# Changez les identifiants admin (IMPORTANT !)
+ADMIN_USERNAME=votre_nom_admin
+ADMIN_PASSWORD=votre_mot_de_passe_securise
+```
+
+### 3. Installation des dépendances
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Démarrage
+```bash
+# Méthode 1 : Script de démarrage (recommandé)
+bash start.sh
+
+# Méthode 2 : Lancement manuel
+python py.py
+```
+
+Le site sera accessible sur `http://localhost:5001`
+
+## 📧 Configuration Gmail
+
+Pour envoyer des emails, vous devez :
+
+1. Activer la validation en 2 étapes sur votre compte Gmail
+2. Créer un "mot de passe d'application" :
+   - Allez dans votre compte Google
+   - Sécurité → Validation en 2 étapes → Mots de passe d'application
+   - Créez un nouveau mot de passe pour "Application Mail"
+3. Utilisez ce mot de passe dans `MAIL_PASSWORD` du fichier `.env`
+
+## 🎯 Utilisation
+
+### Pour les Clients
+
+1. **Parcourir le menu** : Page d'accueil et page Menu
+2. **Ajouter au panier** : Cliquez sur "Ajouter au panier"
+3. **Choisir le type** : Cuit ou Surgelé
+4. **Ajuster les quantités** : Boutons +/- dans le panier
+5. **Commander** :
+   - Remplir les informations personnelles
+   - Choisir retrait sur place OU livraison
+   - Sélectionner date et créneau
+   - Choisir le mode de paiement
+6. **Confirmation** : Email automatique envoyé
+
+### Pour l'Administrateur
+
+1. **Se connecter** : `/admin/login`
+2. **Dashboard** : Vue d'ensemble des statistiques et commandes
+3. **Gérer les produits** :
+   - Ajouter de nouveaux samoussas
+   - Modifier les prix
+   - Supprimer des produits obsolètes
+4. **Consulter les commandes** :
+   - Voir tous les détails clients
+   - Vérifier les adresses de livraison
+   - Suivre les paiements
+
+## 📁 Structure des Fichiers
+
+```
+├── py.py                          # Backend Flask principal
+├── requirements.txt               # Dépendances Python
+├── start.sh                       # Script de démarrage
+├── .env.example                   # Configuration exemple
+├── commandes.json                 # Base de données des commandes
+├── produits.json                  # Base de données des produits
+├── stats.json                     # Statistiques du site
+├── static/
+│   ├── michmich.css              # Styles CSS
+│   ├── michmich.js               # JavaScript client
+│   └── images/                    # Images du site
+└── templates/
+    ├── michmich.html             # Page d'accueil
+    ├── menu.html                 # Page menu
+    ├── contact.html              # Page contact
+    ├── commande.html             # Page de commande
+    ├── confirmation_commande.html # Confirmation
+    ├── admin_login.html          # Connexion admin
+    ├── admin_dashboard.html      # Dashboard admin
+    └── admin_produits.html       # Gestion produits
+```
+
+## 🔒 Sécurité
+
+⚠️ **IMPORTANT en production** :
+- Changez `SECRET_KEY` dans `.env`
+- Changez les identifiants admin par défaut
+- Utilisez une vraie base de données (PostgreSQL, MySQL)
+- Activez HTTPS
+- Configurez un pare-feu
+- Limitez les tentatives de connexion admin
+
+## 🆘 Dépannage
+
+### Le panier ne se met pas à jour
+- Vérifiez que JavaScript est activé
+- Ouvrez la console du navigateur (F12) pour voir les erreurs
+
+### Les emails ne sont pas envoyés
+- Vérifiez les identifiants Gmail dans `.env`
+- Assurez-vous d'utiliser un mot de passe d'application
+- Vérifiez que la validation en 2 étapes est activée
+
+### Je ne peux pas me connecter en admin
+- Vérifiez les identifiants dans le fichier `.env`
+- Par défaut : admin / admin123
+
+## 📞 Support
+
+Pour toute question ou problème, contactez le développeur.
+
+## 📝 Licence
+
+© 2025 Chez Mich-Mich – Tous droits réservés
+
+# 🎉 Guide Complet des Nouvelles Fonctionnalités
+
+## ✅ TOUTES LES CORRECTIONS ET AMÉLIORATIONS
+
+### 1. ✨ **Modal de Commande Amélioré**
+
+#### Avant
+❌ Fallait choisir Cuit/Surgelé AVANT la quantité
+
+#### Maintenant
+✅ **Processus logique en 2 étapes** :
+1. **1️⃣ Choisir la quantité** avec les boutons +/- (grand affichage)
+2. **2️⃣ Choisir le type** : Cuit 🍳 ou Surgelé 🧊
+
+**Design clair** : Numérotation visible pour guider l'utilisateur
+
+---
+
+### 2. 🔒 **Sécurité Admin Renforcée**
+
+#### Protections Implémentées
+
+✅ **Session avec timeout automatique**
+- Déconnexion après 30 minutes d'inactivité
+- Timer réinitialisé à chaque action (clic, scroll, mouvement souris)
+- Message d'alerte avant déconnexion
+
+✅ **Protection par décorateur**
+- Toutes les pages admin protégées par `@admin_required`
+- Redirection automatique vers login si non connecté
+- Renouvellement de session à chaque requête
+
+✅ **Script de sécurité**
+```javascript
+// Surveillance de l'inactivité
+// Déconnexion automatique après 30 min
+// Détection des actions utilisateur
+```
+
+**Configuration** : `app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)`
+
+---
+
+### 3. 🎪 **Séparation Produits Menu / Promotions Carousel**
+
+#### Structure
+
+**📋 Produits Menu** (`produits.json`)
+- Affichés sur la page `/menu`
+- Tableau complet avec tous les produits
+- Gestion complète : Ajouter / Modifier / Supprimer
+
+**🎉 Promotions Carousel** (`promotions.json`)
+- Affichées sur la page d'accueil (carousel)
+- Pour les offres spéciales du mois
+- Gestion : Ajouter / Supprimer
+- Design distinct (fond dégradé violet)
+
+#### Dans l'Admin
+
+**Section 1 : Produits Menu**
+```
+➕ Ajouter un produit au MENU
+   [Formulaire]
+   ✅ Ajouter au menu
+
+📋 Produits du MENU
+   [Liste avec Modifier/Supprimer]
+```
+
+**Section 2 : Promotions Carousel** (fond rose)
+```
+🎉 Ajouter une promotion (CAROUSEL page d'accueil)
+   [Formulaire]
+   ✅ Ajouter à la page d'accueil
+
+🎪 Promotions sur la page d'accueil
+   [Liste avec Retirer]
+```
+
+---
+
+### 4. 📊 **Statistiques du Mois**
+
+#### Dashboard Amélioré
+
+**6 cartes de statistiques** :
+
+1. **📦 Total Commandes** (global)
+2. **💰 Chiffre d'Affaires Total** (global)
+3. **📅 Commandes Novembre 2025** (mois actuel) - Fond violet
+4. **💵 CA Novembre 2025** (mois actuel) - Fond rose
+5. **🛒 Paniers Abandonnés**
+6. **👥 Visites du Site**
+
+**Calcul automatique** :
+- Filtrage par mois/année actuel
+- Mise à jour automatique chaque mois
+- Format : "Novembre 2025", "Décembre 2025", etc.
+
+---
+
+### 5. 📄 **Export PDF des Ventes**
+
+#### Fonctionnalité
+
+**Bouton dans le dashboard** :
+```
+📄 Exporter les ventes du mois en PDF
+```
+
+**Contenu du PDF** :
+- Titre : "Rapport des ventes - Novembre 2025"
+- Statistiques du mois :
+  - Total commandes : XX
+  - Chiffre d'affaires : XXX.XX€
+- Tableau détaillé :
+  - ID | Client | Date | Total
+  - Pour chaque commande du mois
+
+**Format** : `ventes_2025-11.pdf`
+
+**Bibliothèque** : ReportLab (ajoutée aux requirements)
+
+---
+
+### 6. 🗑️ **Suppression des Commandes Terminées**
+
+#### Dans le Dashboard
+
+Chaque commande a maintenant un **bouton de suppression** :
+```
+🗑️ [Bouton rouge]
+```
+
+**Confirmation** : Pop-up "Supprimer cette commande terminée ?"
+
+**Utilité** :
+- Nettoyer les commandes anciennes
+- Garder seulement les commandes en cours
+- Alléger le dashboard
+
+---
+
+### 7. 🔗 **Lien Admin Discret**
+
+#### Emplacement
+
+**Footer de toutes les pages** :
+```
+© 2025 Chez Mich-Mich – Tous droits réservés
+                    •
+              [point discret]
+```
+
+**Caractéristiques** :
+- Opacité 30% (presque invisible)
+- Taille 0.7rem (très petit)
+- Couleur identique au texte
+- Pas de hover visible
+- Lien vers `/admin/login`
+
+**Raison** : Accessible uniquement pour ceux qui savent où chercher
+
+---
+
+### 8. 🔧 **Correction Erreur Commande**
+
+#### Problème Initial
+❌ "Erreur lors de l'enregistrement de la commande"
+✅ Mais la commande apparaissait quand même dans le dashboard
+
+#### Solution
+```python
+try:
+    # Enregistrement de la commande
+    sauvegarder_commande(commande_data)
+    
+    # Envoi d'emails (facultatif, ne bloque pas)
+    try:
+        mail.send(msg_client)
+    except:
+        pass  # L'erreur d'email ne bloque plus
+        
+    # Confirmation réussie
+    return render_template('confirmation_commande.html', ...)
+    
+except Exception as e:
+    # Vrai message d'erreur seulement si échec
+    flash('Erreur', 'error')
+```
+
+**Résultat** :
+✅ Commande enregistrée même si email échoue
+✅ Confirmation affichée correctement
+✅ Pas de message d'erreur erroné
+
+---
+
+## 📁 Nouveaux Fichiers
+
+| Fichier | Contenu |
+|---------|---------|
+| `promotions.json` | Promotions du carousel |
+| `requirements.txt` | + reportlab pour PDF |
+
+---
+
+## 🎯 Installation & Mise à Jour
+
+### 1. Installer les nouvelles dépendances
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Vérifier les fichiers JSON
+Les fichiers seront créés automatiquement au démarrage :
+- ✅ `commandes.json`
+- ✅ `produits.json`
+- ✅ `promotions.json` (NOUVEAU)
+- ✅ `stats.json`
+
+### 3. Lancer le serveur
+```bash
+python py.py
+```
+
+---
+
+## 🧪 Tests Complets
+
+### Test 1 : Modal avec Quantité d'Abord
+```
+1. Allez sur /menu
+2. Cliquez sur "Ajouter" pour un produit
+3. ✅ Le modal s'ouvre
+4. ✅ Vous voyez "1️⃣ Choisissez la quantité"
+5. Augmentez à 5 avec le bouton +
+6. ✅ Vous voyez "2️⃣ Choisissez le type"
+7. Cliquez sur "🍳 Cuit"
+8. ✅ Notification "5 x Samoussa XXX (cuit) ajouté !"
+```
+
+### Test 2 : Sécurité Admin
+```
+1. Connectez-vous à /admin/login
+2. ✅ Accès au dashboard
+3. Attendez 30 minutes sans bouger
+4. ✅ "Session expirée" + redirection
+5. OU fermez l'onglet puis réouvrez
+6. ✅ Demande de reconnexion
+```
+
+### Test 3 : Menu vs Promotions
+```
+1. Admin → Produits
+2. Ajoutez un produit au MENU
+3. ✅ Apparaît sur /menu
+4. ✅ N'apparaît PAS sur / (accueil)
+5. Ajoutez une PROMOTION
+6. ✅ Apparaît sur / (carousel)
+7. ✅ N'apparaît PAS sur /menu
+```
+
+### Test 4 : Stats du Mois
+```
+1. Admin → Dashboard
+2. ✅ Vous voyez "Commandes Novembre 2025"
+3. ✅ Vous voyez "CA Novembre 2025"
+4. Les chiffres correspondent aux commandes du mois
+5. ✅ Cartes avec fond violet et rose
+```
+
+### Test 5 : Export PDF
+```
+1. Admin → Dashboard
+2. Cliquez sur "📄 Exporter les ventes du mois en PDF"
+3. ✅ Téléchargement de ventes_2025-11.pdf
+4. Ouvrez le PDF
+5. ✅ Titre avec mois actuel
+6. ✅ Statistiques du mois
+7. ✅ Tableau des commandes
+```
+
+### Test 6 : Suppression Commande
+```
+1. Admin → Dashboard
+2. Trouvez une commande terminée
+3. Cliquez sur le bouton 🗑️
+4. ✅ Pop-up de confirmation
+5. Confirmez
+6. ✅ "Commande supprimée avec succès"
+7. ✅ La commande a disparu
+```
+
+### Test 7 : Lien Admin Discret
+```
+1. Allez sur / (page d'accueil)
+2. Scrollez tout en bas du footer
+3. Regardez attentivement sous le copyright
+4. ✅ Vous voyez un petit point "•"
+5. Cliquez dessus
+6. ✅ Redirection vers /admin/login
+```
+
+### Test 8 : Commande sans Erreur
+```
+1. Ajoutez des produits au panier
+2. Allez sur /commande
+3. Remplissez le formulaire
+4. Validez
+5. ✅ "Votre commande a été enregistrée !"
+6. ✅ PAS de message d'erreur
+7. Admin → Dashboard
+8. ✅ La commande est visible
+```
+
+---
+
+## 📊 Récapitulatif des Fonctionnalités
+
+| Fonctionnalité | Status | Impact |
+|---------------|--------|--------|
+| Modal Quantité → Type | ✅ | UX améliorée |
+| Sécurité session 30 min | ✅ | Sécurité ++ |
+| Menu / Promotions séparés | ✅ | Gestion flexible |
+| Stats mois actuel | ✅ | Suivi précis |
+| Export PDF | ✅ | Comptabilité |
+| Suppression commandes | ✅ | Nettoyage |
+| Lien admin discret | ✅ | Sécurité |
+| Fix erreur commande | ✅ | Stabilité |
+
+---
+
+## 🎉 Résultat Final
+
+Votre site **Chez Mich-Mich** est maintenant :
+
+✅ **Plus Intuitif** : Modal logique quantité → type  
+✅ **Plus Sécurisé** : Session timeout + protection renforcée  
+✅ **Plus Flexible** : Produits menu ET promotions séparés  
+✅ **Plus Professionnel** : Stats mensuelles + export PDF  
+✅ **Plus Pratique** : Suppression commandes + lien discret  
+✅ **Plus Stable** : Pas d'erreur lors des commandes  
+
+**Le site est prêt pour la production !** 🚀
+
+---
+
+## 🔐 Checklist Sécurité Avant Production
+
+- [ ] Changer `SECRET_KEY` dans `.env`
+- [ ] Changer `ADMIN_USERNAME` dans `.env`
+- [ ] Changer `ADMIN_PASSWORD` (mot de passe fort!)
+- [ ] Activer HTTPS
+- [ ] Utiliser une vraie base de données (PostgreSQL)
+- [ ] Configurer les backups automatiques
+- [ ] Tester la sécurité session sur serveur réel
+
+---
+
+## 📞 Support
+
+Toutes les fonctionnalités demandées sont maintenant implémentées !
+
+**Si vous avez des questions** :
+- Consultez ce guide
+- Testez chaque fonctionnalité
+- Vérifiez les fichiers JSON créés
+
+**Bon succès avec Chez Mich-Mich !** 🍱✨

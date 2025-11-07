@@ -43,9 +43,13 @@
                         <strong>{{ item.nom }}</strong>
                         <small style="color: #72bdb4;"> ({{ item.type }})</small>
                     </div>
-                    <div>
-                        <span>x{{ item.quantite }}</span>
-                        <span style="margin-left: 15px; font-weight: bold;">{{ (item.prix * item.quantite)|round(2) }}€</span>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="quantity-controls-page">
+                            <button onclick="modifierQuantite({{ loop.index0 }}, {{ item.quantite - 1 }})" class="btn-quantity-page">−</button>
+                            <span class="quantity-display-page">{{ item.quantite }}</span>
+                            <button onclick="modifierQuantite({{ loop.index0 }}, {{ item.quantite + 1 }})" class="btn-quantity-page">+</button>
+                        </div>
+                        <span style="font-weight: bold; min-width: 60px; text-align: right;">{{ (item.prix * item.quantite)|round(2) }}€</span>
                     </div>
                 </div>
                 {% endfor %}
@@ -78,13 +82,29 @@
                 </div>
             </div>
 
-            <!-- Lieu de retrait -->
+            <!-- Type de retrait -->
             <div class="form-section">
-                <h3>📍 Lieu de retrait</h3>
+                <h3>📍 Mode de récupération</h3>
+                
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="type_retrait" value="sur_place" checked>
+                        🏪 Retrait sur place
+                    </label>
+                    <label>
+                        <input type="radio" name="type_retrait" value="livraison">
+                        🚗 Livraison à domicile
+                    </label>
+                </div>
+            </div>
+
+            <!-- Lieu de retrait sur place -->
+            <div class="form-section" id="ville-group">
+                <h3>🏪 Lieu de retrait</h3>
                 
                 <div class="form-group">
                     <label for="ville">Ville de retrait *</label>
-                    <select name="ville" id="ville" required>
+                    <select name="ville" id="ville">
                         <option value="">-- Choisir une ville --</option>
                         {% for ville in villes %}
                         <option value="{{ ville }}">{{ ville }}</option>
@@ -93,12 +113,22 @@
                 </div>
             </div>
 
-            <!-- Date et créneau -->
-            <div class="form-section">
-                <h3>📅 Date et heure de retrait</h3>
+            <!-- Adresse de livraison -->
+            <div class="form-section" id="adresse-group" style="display: none;">
+                <h3>🏠 Adresse de livraison</h3>
                 
                 <div class="form-group">
-                    <label for="date_retrait">Date de retrait *</label>
+                    <label for="adresse">Adresse complète *</label>
+                    <textarea name="adresse" id="adresse" rows="3" placeholder="Numéro, rue, ville, code postal"></textarea>
+                </div>
+            </div>
+
+            <!-- Date et créneau -->
+            <div class="form-section">
+                <h3>📅 Date et heure</h3>
+                
+                <div class="form-group">
+                    <label for="date_retrait">Date *</label>
                     <input type="date" name="date_retrait" id="date_retrait" required min="{{ date_min }}">
                 </div>
 
@@ -147,6 +177,46 @@
     <footer>
         <p>© 2025 Chez Mich-Mich – Tous droits réservés</p>
     </footer>
+
+    <style>
+        .quantity-controls-page {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 4px 10px;
+        }
+        
+        .btn-quantity-page {
+            background: #72bdb4;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        
+        .btn-quantity-page:hover {
+            background: #497D74;
+        }
+        
+        .quantity-display-page {
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1rem;
+        }
+    </style>
 
     <script src="{{ url_for('static', filename='michmich.js') }}"></script>
 </body>

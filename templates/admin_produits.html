@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Produits - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <style>
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        
+        .file-input-label:hover {
+            background: var(--accent-color);
+        }
+        
+        .file-name {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    
+    <header>
+        <a href="{{ url_for('accueil') }}" class="logo">
+            <span class="logo">Chez Mich-Mich</span>
+        </a>
+        <button id="burger" class="burger">☰</button>
+        <div id="sidebar" class="sidebar">
+            <a href="{{ url_for('accueil') }}">🏠 Accueil</a>
+            <a href="{{ url_for('admin_dashboard') }}">📊 Dashboard</a>
+            <a href="{{ url_for('admin_produits') }}">🍱 Produits</a>
+            <a href="{{ url_for('admin_logout') }}">🚪 Déconnexion</a>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1 style="color: var(--primary-color); margin: 0;">Gestion des Produits</h1>
+                <p style="color: var(--dark-color); margin: 5px 0 0 0;">Gérez votre menu et vos offres</p>
+            </div>
+            <div class="admin-nav">
+                <a href="{{ url_for('admin_dashboard') }}">📊 Dashboard</a>
+                <a href="{{ url_for('admin_produits') }}">🍱 Produits</a>
+                <a href="{{ url_for('admin_logout') }}">🚪 Déconnexion</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}" style="margin-bottom: 20px;">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Formulaire d'ajout PRODUIT MENU -->
+        <div class="section-card">
+            <h2>➕ Ajouter un produit au MENU</h2>
+            <div class="add-form">
+                <form action="{{ url_for('admin_ajouter_produit') }}" method="post" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nom">Nom du produit *</label>
+                            <input type="text" name="nom" id="nom" required placeholder="Samoussa Poulet">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="prix">Prix (€) *</label>
+                            <input type="number" name="prix" id="prix" step="0.01" required placeholder="1.50">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="image_file_produit">Image du produit</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" name="image_file" id="image_file_produit" accept="image/*" onchange="previewImage(this, 'preview_produit')">
+                                <label for="image_file_produit" class="file-input-label">
+                                    📸 Choisir une image
+                                </label>
+                            </div>
+                            <div id="file_name_produit" class="file-name"></div>
+                            <img id="preview_produit" class="image-preview" alt="Aperçu">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" style="width: 100%;">
+                        ✅ Ajouter au menu
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Liste des produits MENU -->
+        <div class="section-card">
+            <h2>📋 Produits du MENU</h2>
+            
+            {% if produits %}
+                {% for produit in produits %}
+                <div class="produit-card">
+                    <div class="produit-header">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="{{ url_for('static', filename='images/' + produit.image) }}" 
+                                alt="{{ produit.nom }}" 
+                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                            <div class="produit-info">
+                                <h3 style="margin: 0 0 10px 0; color: var(--accent-color);">{{ produit.nom }}</h3>
+                                <p style="margin: 0; color: var(--secondary-color); font-size: 1.2rem; font-weight: bold;">{{ produit.prix }}€</p>
+                                <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.7); font-size: 0.9rem;">Image: {{ produit.image }}</p>
+                            </div>
+                        </div>
+                        <div class="produit-actions">
+                            <button class="btn-edit" onclick="openEditModal({{ loop.index0 }}, '{{ produit.nom }}', {{ produit.prix }}, '{{ produit.image }}')">
+                                ✏️ Modifier
+                            </button>
+                            <form action="{{ url_for('admin_supprimer_produit', index=loop.index0) }}" method="post" style="display: inline;" onsubmit="return confirm('Supprimer ce produit ?');">
+                                <button type="submit" class="btn-delete">
+                                    🗑️ Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="color: var(--text-dark); text-align: center; padding: 40px;">Aucun produit pour le moment</p>
+            {% endif %}
+        </div>
+
+        <!-- Formulaire d'ajout PROMOTION CAROUSEL -->
+        <div class="section-card">
+            <h2 style="color: var(--primary-color);">🎉 Ajouter une promotion (CAROUSEL page d'accueil)</h2>
+            <div class="add-form">
+                <form action="{{ url_for('admin_ajouter_promotion') }}" method="post" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nom_promo">Nom de la promotion *</label>
+                            <input type="text" name="nom" id="nom_promo" required placeholder="Offre Spéciale du Mois">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="prix_promo">Prix (€) *</label>
+                            <input type="number" name="prix" id="prix_promo" step="0.01" required placeholder="9.99">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="image_file_promo">Image de la promotion</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" name="image_file" id="image_file_promo" accept="image/*" onchange="previewImage(this, 'preview_promo')">
+                                <label for="image_file_promo" class="file-input-label">
+                                    📸 Choisir une image
+                                </label>
+                            </div>
+                            <div id="file_name_promo" class="file-name"></div>
+                            <img id="preview_promo" class="image-preview" alt="Aperçu">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" style="width: 100%; background: var(--primary-color);">
+                        ✅ Ajouter à la page d'accueil
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Liste des promotions CAROUSEL -->
+        <div class="section-card">
+            <h2 style="color: var(--primary-color);">🎪 Promotions sur la page d'accueil (CAROUSEL)</h2>
+            
+            {% if promotions %}
+                {% for promo in promotions %}
+                <div class="produit-card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);">
+                    <div class="produit-header">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="{{ url_for('static', filename='images/' + promo.image) }}" 
+                                alt="{{ promo.nom }}" 
+                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                            <div class="produit-info">
+                                <h3 style="margin: 0 0 10px 0; color: white;">🎁 {{ promo.nom }}</h3>
+                                <p style="margin: 0; color: var(--secondary-color); font-size: 1.2rem; font-weight: bold;">{{ promo.prix }}€</p>
+                                <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.9); font-size: 0.9rem;">Image: {{ promo.image }}</p>
+                            </div>
+                        </div>
+                        <div class="produit-actions">
+                            <form action="{{ url_for('admin_supprimer_promotion', index=loop.index0) }}" method="post" style="display: inline;" onsubmit="return confirm('Retirer cette promotion ?');">
+                                <button type="submit" class="btn-delete">
+                                    🗑️ Retirer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="color: var(--text-dark); text-align: center; padding: 40px;">Aucune promotion active</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Modal de modification -->
+    <div id="editModal" class="edit-modal">
+        <div class="modal-content">
+            <h3>Modifier le produit</h3>
+            <form id="editForm" method="post">
+                <div class="form-group">
+                    <label for="edit_nom">Nom du produit *</label>
+                    <input type="text" name="nom" id="edit_nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_prix">Prix (€) *</label>
+                    <input type="number" name="prix" id="edit_prix" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_image">Nom de l'image</label>
+                    <input type="text" name="image" id="edit_image">
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn-submit" style="flex: 1;">
+                        ✅ Enregistrer
+                    </button>
+                    <button type="button" onclick="closeEditModal()" class="btn-annuler" style="flex: 1; background: #666; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
+                        ❌ Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Chez Mich-Mich – Tous droits réservés</p>
+    </footer>
+
+    <script>
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const fileNameDiv = document.getElementById('file_name_' + previewId.split('_')[1]);
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+                fileNameDiv.textContent = '📎 ' + input.files[0].name;
+            } else {
+                preview.style.display = 'none';
+                fileNameDiv.textContent = '';
+            }
+        }
+        
+        function openEditModal(index, nom, prix, image) {
+            document.getElementById('editModal').classList.add('active');
+            document.getElementById('edit_nom').value = nom;
+            document.getElementById('edit_prix').value = prix;
+            document.getElementById('edit_image').value = image;
+            document.getElementById('editForm').action = `/admin/produit/modifier/${index}`;
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+        
+        // Fermer le modal en cliquant en dehors
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='michmich.js') }}"></script>
+</body>
+</html>

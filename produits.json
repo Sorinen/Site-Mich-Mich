@@ -1,0 +1,47 @@
+[
+  {
+    "nom": "Samoussa Fromage",
+    "prix": 1.3,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "Samoussa Végétarien",
+    "prix": 1.4,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "Samoussa Bœuf",
+    "prix": 1.6,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "Menu 6 Samoussas",
+    "prix": 8.0,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "Menu 12 Samoussas",
+    "prix": 15.0,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "Menu Famille",
+    "prix": 24.0,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "Pack Dégustation",
+    "prix": 5.5,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "s'amusa bichique",
+    "prix": 1.0,
+    "image": "samousa.jpg"
+  },
+  {
+    "nom": "samoussa choucou",
+    "prix": 4.0,
+    "image": "samoussa.jpg"
+  }
+]

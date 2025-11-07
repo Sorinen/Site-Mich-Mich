@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée - Chez Mich-Mich</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .error-box {
+            background: #497D74;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #72bdb4;
+            margin: 0;
+        }
+        
+        .error-message {
+            color: white;
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        
+        .error-description {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+        }
+        
+        .error-link {
+            display: inline-block;
+            background: #72bdb4;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .error-link:hover {
+            background: #27445D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    
+    <div class="error-container">
+        <div class="error-box">
+            <div class="error-code">404</div>
+            <div class="error-message">Oups ! Page non trouvée</div>
+            <p class="error-description">
+                La page que vous recherchez n'existe pas ou a été déplacée.
+            </p>
+            <a href="{{ url_for('accueil') }}" class="error-link">
+                🏠 Retour à l'accueil
+            </a>
+        </div>
+    </div>
+</body>
+</html>

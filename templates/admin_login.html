@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Connexion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='michmich.css') }}">
+    <style>
+        .admin-login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--cream-color) 100%);
+            border: 3px solid var(--primary-color);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .login-box h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .login-icon {
+            text-align: center;
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Labels flottants */
+        .floating-label {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .floating-label input {
+            width: 100%;
+            padding: 18px 12px 8px 12px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.95);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .floating-label label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1rem;
+            transition: all 0.3s;
+            pointer-events: none;
+            background: transparent;
+            padding: 0 4px;
+        }
+
+        .floating-label input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            background: linear-gradient(135deg, #FFF9E6 0%, #D8DAB5 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    
+    <div class="admin-login-container">
+        <div class="login-box">
+            <div class="login-icon">🔐</div>
+            <h2>Administration</h2>
+            
+            <form method="post">
+                <div class="floating-label">
+                    <input type="text" name="username" id="username" required autofocus placeholder=" ">
+                    <label for="username">Nom d'utilisateur</label>
+                </div>
+                
+                <div class="floating-label">
+                    <input type="password" name="password" id="password" required placeholder=" ">
+                    <label for="password">Mot de passe</label>
+                </div>
+                
+                <button type="submit" class="btn-submit">Se connecter</button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="{{ url_for('accueil') }}" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">← Retour au site</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
